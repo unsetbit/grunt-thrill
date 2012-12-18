@@ -1,5 +1,5 @@
 var utils = require('../lib/utils.js'),
-	thrillModule = require('../../thrill'),
+	thrillModule = require('thrill'),
 	createThrill = thrillModule.thrill,
 	createHttpServer = thrillModule.httpServer,
 	createReporter = thrillModule.reporter.unifiedDot;

@@ -31,10 +31,14 @@
     "thrill": "~0.2.0"
   },
   "devDependencies": {
-    "grunt-contrib-clean": "~0.3.0",
-    "grunt": "~0.3.11"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin",
+    "thrill",
+    "grunt",
+    "queen",
+    "test",
+    "test-runner",
+    "runner"
   ]
 }

@@ -32,7 +32,7 @@ var getExternalIpAddress = function(){
 var run = function(grunt, config){
 	var done = config.async(),
 		data = config.data,
-		scripts = config.file.src,
+		scripts = grunt.file.expand(config.file.src),
 		server;
 
 	server = createHttpServer(serverReady, 

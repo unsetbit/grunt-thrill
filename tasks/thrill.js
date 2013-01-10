@@ -32,25 +32,36 @@ var getExternalIpAddress = function(){
 var run = function(grunt, config){
 	var done = config.async(),
 		data = config.data,
-		scripts = grunt.file.expand(config.file.src),
+		run = config.file.run,
+		verbose = data.verbose === true,
+		quiet = data.quiet === true,
+		pathMap = config.server || {},
+		log = console.log.bind(console),
+		debug = utils.noop,
 		server;
 
-	server = createHttpServer(serverReady, 
-		{
-			log: console.log.bind(this),
-			port: data.port,
-			host: data.host || getExternalIpAddress()
-		}
-	);
-	function serverReady(server){
-		scripts = server.serveFiles(scripts);
+	if(verbose){
+		debug = log;
+	}	
 
+	if(quiet){
+		log = utils.noop;
+	}
+
+	grunt.fatal('Run variable must be defined.');
+	
+	function serverReady(server){
+		var served = server.serveFiles(pathMap, run);
+		
+		if(runHtml){
+			runHtml = runHtml.replace(/(<head.*>)/,'$1' + '<base href="' + served.runUrls + '"></base>');
+		}
+		
 		function onReady(thrill){
 			var test = thrill({
-				scripts: scripts, 
+				run: runHtml || served.runUrls,
 				filter: data.filter,
 				timeout: data.timeout,
-				filter: data.filter,
 				autoStart:false
 			});
 			
@@ -71,9 +82,32 @@ var run = function(grunt, config){
 		};
 
 		createThrill(onReady, { 
-			log: console.log.bind(console),
+			log: log,
+			debug: debug,
 			queenHost: data.queenHost,
 			queenPort: data.queenPort
 		});
+	}
+
+	function createServer(){
+		server = createHttpServer(serverReady, 
+			{
+				log: log,
+				debug: debug,
+				port: data.port,
+				host: data.host || getExternalIpAddress()
+			}
+		);
+	}	
+
+	if(typeof run === "string" && !~run.indexOf('.js')){
+		fs.readFile(run, function(err, data){
+			if(err) throw err;
+			runHtml = data.toString();
+			createServer();
+		});
+	} else {
+		run = grunt.file.expand(run);
+		createServer();
 	}
 };

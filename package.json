@@ -1,7 +1,7 @@
 {
   "name": "grunt-thrill",
-  "description": "Test your front-end code on many browsers.",
-  "version": "0.2.0",
+  "description": "Test your web application on many browsers.",
+  "version": "0.3.0",
   "homepage": "https://github.com/ozanturgut/grunt-thrill",
   "author": {
     "name": "Ozan Turgut",
@@ -16,8 +16,8 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "https://github.com/ozanturgut/grunt-thrill/blob/master/LICENSE-MIT"
+      "type": "Apache License 2.0",
+      "url": "https://github.com/ozanturgut/grunt-thrill/blob/master/LICENSE-APACHE2"
     }
   ],
   "main": "grunt.js",
@@ -28,13 +28,13 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "thrill": "~0.2.2"
+    "thrill": "~0.3.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "keywords": [
     "gruntplugin",
     "thrill",
+    "awesome",
     "grunt",
     "queen",
     "test",

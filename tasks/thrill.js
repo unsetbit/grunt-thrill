@@ -5,8 +5,9 @@ module.exports = function(grunt){
 		var config = this.data,
 			done = this.async();
 		
-		config.run = grunt.file.expand(config.run);
+		if(config.run) config.run = grunt.file.expand(config.run);
 		
+		if(typeof config === "string") config = {file: config};
 		runner(config, function(test){
 			if(test.passed){
 				done(true);
